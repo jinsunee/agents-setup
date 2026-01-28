@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "claude-mem": {
+      "command": "node",
+      "args": [
+        "/Users/jinsun/.claude/plugins/marketplaces/thedotmack/plugin/scripts/mcp-server.cjs"
+      ],
+      "env": {
+        "CLAUDE_MEM_DATA_DIR": "/Users/jinsun/.claude-mem",
+        "CLAUDE_MEM_PORT": "37777"
+      }
+    }
+  },
+  "_comments": {
+    "claude-mem": "claude-mem을 claude 플러그인으로 설치한 후 사용 가능"
+  }
+}
