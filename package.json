@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "sync-skills": "./scripts/sync-skills.js",
+    "sync-global-skills": "./scripts/sync-global-skills.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "link-skill": "node scripts/link-skill.js"
+    "sync-skills": "node scripts/sync-skills.js",
+    "sync-global-skills": "node scripts/sync-global-skills.js"
   },
   "keywords": [],
   "author": "",
