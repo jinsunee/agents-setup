@@ -12,7 +12,7 @@ Transform user ideas into structured feature documentation through brainstorming
 
 **Announce at start:** "I'm using the feature-planning skill to create PRD, Plan, and Tests."
 
-**Output location:** `features/[feature-name]_[YYYY-MM-DD]/`
+**Output location:** `docs/features/[feature-name]_[YYYY-MM-DD]/`
 
 ## Workflow
 
@@ -24,6 +24,7 @@ Transform user ideas into structured feature documentation through brainstorming
 ### Step 2: Requirements Gathering (Brainstorming Style)
 
 Explore the idea through dialogue:
+
 - Ask **one question at a time**
 - Prefer **multiple choice** when possible
 - Cover: purpose, target users, core features, constraints, success criteria
@@ -32,7 +33,7 @@ Explore the idea through dialogue:
 
 ### Step 3: Create Folder & PRD
 
-1. Create folder: `features/[feature-name]_[YYYY-MM-DD]/`
+1. Create folder: `docs/features/[feature-name]_[YYYY-MM-DD]/`
 2. Write `prd.md`:
 
 ```markdown
@@ -42,19 +43,24 @@ Explore the idea through dialogue:
 **Status:** Draft | Ready | In Progress | Done
 
 ## Purpose
+
 [Why this feature is needed]
 
 ## Target Users
+
 [Who will use this]
 
 ## Core Features
+
 - [ ] Feature 1
 - [ ] Feature 2
 
 ## Constraints
+
 - [Technical/business constraints]
 
 ## Success Criteria
+
 - [How to know it's complete]
 ```
 
@@ -73,16 +79,20 @@ Explore the idea through dialogue:
 **Status:** Planning | Ready | In Progress | Done
 
 ## Architecture Overview
+
 [2-3 sentences on overall approach]
 
 ## Tech Stack
+
 - [Technologies/libraries to use]
 
 ## Feature List
+
 - [ ] Feature 1: [brief description]
 - [ ] Feature 2: [brief description]
 
 ## Reference
+
 - [Related docs/code links]
 ```
 
@@ -105,6 +115,7 @@ tests/
 ### Step 6: Complete
 
 Report created files:
+
 ```
 Feature planning complete!
 
@@ -132,4 +143,5 @@ Next step: /writing-tasks features/[name]_[date]
 **Next skill:** `/writing-tasks` - breaks Plan into 2-5 minute task units
 
 **Pairs with:**
+
 - `/writing-tasks` → `/setup-task-worktrees` → `/executing-tasks`
