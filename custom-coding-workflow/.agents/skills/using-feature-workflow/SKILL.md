@@ -1,147 +1,301 @@
 ---
 name: using-feature-workflow
-description: Use when building new features - guides through the complete workflow from idea to implementation with TDD and parallel execution
+description: Use when building new features - guides through the complete workflow from idea to implementation
 ---
 
 # Using Feature Workflow
 
 ## Overview
 
-Complete workflow for turning ideas into implemented features using TDD approach and parallel execution across worktrees.
+This skill guides you through the complete feature development workflow. Follow the phases in order.
 
-## The Workflow
+**Announce at start:** "I'm using the feature-workflow skill to guide this development."
+
+## Workflow Diagram
 
 ```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  Phase 1: Planning                                                          │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  /feature-planning                                                   │   │
+│  │      │                                                               │   │
+│  │      ├── /prd ──────────────────► prd.md                            │   │
+│  │      │                                                               │   │
+│  │      └── /technical-spec ───────► technical-spec.md                 │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                      │
+│                                      ▼                                      │
+│  Phase 2: Plan Writing                                                      │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  /writing-plans                                                      │   │
+│  │      │                                                               │   │
+│  │      ├── plan.md (overview + dependency graph)                      │   │
+│  │      │                                                               │   │
+│  │      └── tasks/                                                      │   │
+│  │          ├── group-a.md                                             │   │
+│  │          ├── group-b.md                                             │   │
+│  │          └── group-c.md                                             │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                      │
+│                                      ▼                                      │
+│  Phase 3: Execution                                                         │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  /executing-plans                                                    │   │
+│  │      │                                                               │   │
+│  │      └── Create worktrees ──► Guide user to terminals               │   │
+│  │                            ──► Execute tasks (TDD)                  │   │
+│  │                            ──► Merge when all complete              │   │
+│  │                                                                      │   │
+│  │  During execution:                                                   │   │
+│  │      • /test-driven-development (always)                            │   │
+│  │      • /systematic-debugging (when stuck)                           │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                      │
+│                                      ▼                                      │
+│  Phase 4: Review                                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  /requesting-code-review ──► Request review                         │   │
+│  │  /receiving-code-review  ──► Handle feedback                        │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                      │
+│                                      ▼                                      │
+│  Phase 5: Completion                                                        │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  /verification-before-completion ──► Verify all tests pass          │   │
+│  │  /finishing-a-development-branch ──► Merge / PR / Keep / Discard    │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Output Structure
+
+```
+docs/features/[feature-name]_[YYYY-MM-DD]/
+├── prd.md                  # Phase 1: Product requirements
+├── technical-spec.md       # Phase 1: Technical specification
+├── plan.md                 # Phase 2: Implementation overview
+└── tasks/                  # Phase 2: Executable task files
+    ├── group-a.md
+    ├── group-b.md
+    └── group-c.md
+```
+
+## Skill Reference
+
+| Phase | Skill | Purpose |
+|-------|-------|---------|
+| 1. Planning | `/feature-planning` | Entry point - orchestrates PRD + spec |
+| | `/prd` | Create Product Requirements Document |
+| | `/technical-spec` | Create technical specification |
+| 2. Plan Writing | `/writing-plans` | Create plan.md + task files |
+| 3. Execution | `/executing-plans` | Create worktrees + execute tasks |
+| | `/test-driven-development` | TDD methodology (always) |
+| | `/systematic-debugging` | Debug when stuck |
+| 4. Review | `/requesting-code-review` | Request code review |
+| | `/receiving-code-review` | Handle review feedback |
+| 5. Completion | `/verification-before-completion` | Verify before claiming done |
+| | `/finishing-a-development-branch` | Merge/PR/Keep/Discard |
+
+---
+
+## Phase 1: Planning
+
+**Purpose:** Transform idea into PRD and technical specification.
+
+**Invoke:** `/feature-planning`
+
+```
+User: "Add user authentication"
+You: Invoke Skill tool with "feature-planning"
+     Follow the skill to create PRD and technical-spec
+```
+
+**Output:**
+```
+docs/features/[feature-name]_[YYYY-MM-DD]/
+├── prd.md
+└── technical-spec.md
+```
+
+**When complete:** Proceed to Phase 2.
+
+---
+
+## Phase 2: Plan Writing
+
+**Purpose:** Create detailed implementation plan with grouped tasks.
+
+**Invoke:** `/writing-plans`
+
+```
+You: Invoke Skill tool with "writing-plans"
+     Argument: "docs/features/[feature-name]_[YYYY-MM-DD]"
+```
+
+**Output:**
+```
+docs/features/[feature-name]_[YYYY-MM-DD]/
+├── plan.md                 # Overview + dependency graph
+└── tasks/
+    ├── group-a.md          # Sequential tasks
+    ├── group-b.md          # Sequential tasks
+    └── group-c.md          # Independent tasks
+```
+
+**When complete:** Commit task files, proceed to Phase 3.
+
+---
+
+## Phase 3: Execution
+
+**Purpose:** Execute tasks in isolated worktrees.
+
+**Invoke:** `/executing-plans`
+
+```
+You: Invoke Skill tool with "executing-plans"
+     Argument: "docs/features/[feature-name]_[YYYY-MM-DD]"
+```
+
+### Execution Flow Detail
+
+```
+/executing-plans
+       │
+       ▼
+┌──────────────────┐
+│ Read plan.md     │
+│ Read tasks/*.md  │
+└────────┬─────────┘
+         │
+         ▼
 ┌──────────────────────────────────────────────────────────────┐
-│  1. /feature-planning                                        │
-│     Idea → PRD → Plan → Tests (failing)                      │
-│     Output: features/[name]_[date]/                          │
-│              ├── prd.md                                      │
-│              ├── plan.md                                     │
-│              └── tests/                                      │
-└──────────────────────────────────────────────────────────────┘
-                              ↓
-┌──────────────────────────────────────────────────────────────┐
-│  2. /writing-tasks                                           │
-│     Plan → 2-5 min tasks with grouping                       │
-│     Output: features/[name]_[date]/                          │
-│              └── tasks/                                      │
-│                    ├── g1-01_xxx.md  (group 1)               │
-│                    ├── g1-02_xxx.md                          │
-│                    ├── g2-01_xxx.md  (group 2)               │
-│                    └── 01_xxx.md     (independent)           │
-└──────────────────────────────────────────────────────────────┘
-                              ↓
-┌──────────────────────────────────────────────────────────────┐
-│  3. /setup-task-worktrees                                    │
-│     Tasks → Worktrees for parallel execution                 │
-│     Output: .worktrees/                                      │
-│              ├── [feature]_g1/                               │
-│              ├── [feature]_g2/                               │
-│              └── [feature]_independent/                      │
-└──────────────────────────────────────────────────────────────┘
-                              ↓
-┌──────────────────────────────────────────────────────────────┐
-│  4. /executing-tasks (in each worktree)                      │
-│     TDD: Red → Green → Commit                                │
+│ Create worktree for EACH group:                              │
+│   .worktrees/[feature]_group-a                              │
+│   .worktrees/[feature]_group-b                              │
+│   .worktrees/[feature]_group-c                              │
 │                                                              │
-│     Terminal 1:                  Terminal 2:                 │
-│     cd .worktrees/xxx_g1         cd .worktrees/xxx_g2        │
-│     claude                       claude                      │
-│     /executing-tasks             /executing-tasks            │
+│ (Every group gets isolated worktree - keeps main clean)     │
 └──────────────────────────────────────────────────────────────┘
+         │
+         ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Guide user to open terminals:                                │
+│                                                              │
+│   Terminal 1: cd .worktrees/[feature]_group-a && claude     │
+│               "Execute tasks/group-a.md"                     │
+│                                                              │
+│   Terminal 2: cd .worktrees/[feature]_group-b && claude     │
+│               "Execute tasks/group-b.md"                     │
+│                                                              │
+│   Terminal 3: cd .worktrees/[feature]_group-c && claude     │
+│               "Execute tasks/group-c.md"                     │
+│                                                              │
+│ (Run in parallel or sequentially - user's choice)           │
+└──────────────────────────────────────────────────────────────┘
+         │
+         ▼
+┌──────────────────────────────────────────────────────────────┐
+│ In each worktree session:                                    │
+│   • Read assigned task file                                  │
+│   • Execute tasks sequentially (Red → Green → Commit)        │
+│   • Report "Group X done" when complete                      │
+└──────────────────────────────────────────────────────────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Wait for         │
+│ "All groups done"│
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Merge branches:                                              │
+│   git checkout -b feature/[feature-name]                    │
+│   git merge feature/[feature]_group-a                       │
+│   git merge feature/[feature]_group-b                       │
+│   git merge feature/[feature]_group-c                       │
+└──────────────────────────────────────────────────────────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Cleanup          │
+│ worktrees        │
+└──────────────────┘
 ```
 
-## When to Use Each Skill
+**During execution, also use:**
+- `/test-driven-development` - Always (Red → Green → Commit)
+- `/systematic-debugging` - When tests fail unexpectedly
 
-| Situation | Skill |
-|-----------|-------|
-| "새 기능 만들고 싶어" | `/feature-planning` |
-| "PRD, Plan이 있는데 task로 쪼개줘" | `/writing-tasks` |
-| "task 작성 완료, worktree 만들어줘" | `/setup-task-worktrees` |
-| "worktree에서 task 실행해줘" | `/executing-tasks` |
+**When complete:** All branches merged, proceed to Phase 4.
+
+---
+
+## Phase 4: Review
+
+**Purpose:** Get code review and handle feedback.
+
+**Invoke:** `/requesting-code-review` then `/receiving-code-review`
+
+```
+You: Invoke Skill tool with "requesting-code-review"
+     After receiving feedback:
+     Invoke Skill tool with "receiving-code-review"
+```
+
+**When complete:** All review feedback addressed, proceed to Phase 5.
+
+---
+
+## Phase 5: Completion
+
+**Purpose:** Verify and finalize the work.
+
+**Invoke:** `/verification-before-completion` then `/finishing-a-development-branch`
+
+```
+You: Invoke Skill tool with "verification-before-completion"
+     Verify all tests pass
+
+     Invoke Skill tool with "finishing-a-development-branch"
+     Choose: Merge / PR / Keep / Discard
+```
+
+**When complete:** Feature is merged or PR created.
+
+---
 
 ## Quick Start
 
-**새 기능 시작:**
-```
-/feature-planning 사용자 인증 기능 추가
-```
-
-**이미 Plan이 있을 때:**
-```
-/writing-tasks features/user-auth_2025-01-30
-```
-
-**Tasks 완료 후 worktree 생성:**
-```
-/setup-task-worktrees features/user-auth_2025-01-30
-```
-
-**각 worktree에서 실행:**
 ```bash
-cd .worktrees/user-auth_g1 && claude
-# Claude 세션에서:
-/executing-tasks features/user-auth_2025-01-30
-```
+# Start a new feature
+claude
+> /feature-planning "Add user authentication"
 
-## Key Principles
+# After planning complete
+> /writing-plans docs/features/user-auth_2025-02-03
 
-### TDD is Mandatory
+# Execute the plan
+> /executing-plans docs/features/user-auth_2025-02-03
 
-Every task follows:
-1. **RED**: Write test → must fail
-2. **GREEN**: Implement → minimal code
-3. **VERIFY**: Run test → must pass
-4. **COMMIT**: Save progress
-
-### Parallel Execution
-
-- **Same group** (`g1-01`, `g1-02`) → Sequential in one worktree
-- **Different groups** (`g1-*`, `g2-*`) → Parallel in separate worktrees
-- **Independent** (no prefix) → Any worktree, any order
-
-### Feedback at Every Step
-
-- PRD 작성 후 → 피드백 요청
-- Plan 작성 후 → 피드백 요청
-- 3개 Task 완료마다 → 진행 리포트
-
-## File Structure
-
-```
-features/
-  [feature-name]_[YYYY-MM-DD]/
-    ├── prd.md              # Requirements
-    ├── plan.md             # Architecture, feature list
-    ├── tests/              # Integration tests (TDD - written first)
-    │     └── test_xxx.py
-    └── tasks/              # Executable task units
-          ├── g1-01_xxx.md  # Group 1 (sequential)
-          ├── g1-02_xxx.md
-          ├── g2-01_xxx.md  # Group 2 (sequential)
-          └── 01_xxx.md     # Independent
-
-.worktrees/
-  ├── [feature]_g1/         # Worktree for group 1
-  ├── [feature]_g2/         # Worktree for group 2
-  └── [feature]_independent/ # Worktree for independent tasks
+# After implementation complete
+> /finishing-a-development-branch
 ```
 
 ## Red Flags
 
-| Thought | Reality |
-|---------|---------|
-| "Plan 없이 바로 코딩하자" | `/feature-planning` 먼저 |
-| "테스트는 나중에" | TDD 필수, 테스트 먼저 |
-| "한 터미널에서 다 하자" | 그룹별로 worktree 분리 |
-| "task 파일 없이 진행" | `/writing-tasks`로 task 생성 |
-| "의존성 있는 task를 병렬로" | 같은 그룹은 순차 실행 |
+**Never:**
+- Skip phases
+- Start coding without PRD + technical-spec
+- Execute tasks without plan.md
+- Merge without verification
+- Skip TDD during execution
 
-## Integration with Other Skills
-
-**Before feature-planning:**
-- `/brainstorming` - 아이디어가 불명확할 때
-
-**After all tasks complete:**
-- `/finishing-a-development-branch` - 브랜치 머지/PR 생성
+**Always:**
+- Follow phases in order
+- Invoke each skill before acting
+- Use worktrees for isolation
+- Verify tests before completion

@@ -1,16 +1,16 @@
 ---
 name: feature-planning
-description: Use when starting a new feature - transforms ideas into PRD, Plan, and test code through collaborative dialogue
-argument-hint: "[feature description (optional)]"
+description: Use when starting a new feature - creates PRD and technical-spec through collaborative dialogue
+argument-hint: "[feature description or PRD folder path (optional)]"
 ---
 
 # Feature Planning
 
 ## Overview
 
-Transform user ideas into structured feature documentation through brainstorming-style dialogue. Creates PRD, implementation plan, and test code (TDD approach - tests first, failing state).
+Transform user ideas into PRD and technical specification. Checks for existing PRD first, then creates technical-spec.
 
-**Announce at start:** "I'm using the feature-planning skill to create PRD, Plan, and Tests."
+**Announce at start:** "I'm using the feature-planning skill to create PRD and Technical Spec."
 
 **Output location:** `docs/features/[feature-name]_[YYYY-MM-DD]/`
 
@@ -18,101 +18,33 @@ Transform user ideas into structured feature documentation through brainstorming
 
 ### Step 1: Start
 
-- If `$ARGUMENTS` provided → proceed to Step 2 with that context
+- If `$ARGUMENTS` is a folder path (e.g., `docs/features/xxx`) → check for existing PRD
+- If `$ARGUMENTS` is a description → proceed to Step 2
 - If `$ARGUMENTS` empty → ask "What feature would you like to build?"
 
-### Step 2: Requirements Gathering (Brainstorming Style)
+### Step 2: PRD Check
 
-Explore the idea through dialogue:
+Check if PRD exists:
 
-- Ask **one question at a time**
-- Prefer **multiple choice** when possible
-- Cover: purpose, target users, core features, constraints, success criteria
-- Propose **2-3 approaches** with trade-offs when relevant
-- Lead with your recommendation and explain why
+**PRD exists:**
+- Read and summarize the PRD
+- Confirm with user: "Found existing PRD. Should I proceed to technical-spec?"
+- If yes → Step 3
 
-### Step 3: Create Folder & PRD
+**PRD does not exist:**
+- Invoke `/prd` skill to create PRD
+- After PRD complete → Step 3
 
-1. Create folder: `docs/features/[feature-name]_[YYYY-MM-DD]/`
-2. Write `prd.md`:
+### Step 3: Technical Spec
 
-```markdown
-# [Feature Name] PRD
+Invoke `/technical-spec` skill with the feature folder path.
 
-**Created:** YYYY-MM-DD
-**Status:** Draft | Ready | In Progress | Done
+The technical-spec skill will:
+- Read the PRD
+- Create technical-spec.md through brainstorming dialogue
+- Cover: 목적, 해결(아키텍처/API), 행동 정의, 테스트 전략, 리스크, 오픈 이슈
 
-## Purpose
-
-[Why this feature is needed]
-
-## Target Users
-
-[Who will use this]
-
-## Core Features
-
-- [ ] Feature 1
-- [ ] Feature 2
-
-## Constraints
-
-- [Technical/business constraints]
-
-## Success Criteria
-
-- [How to know it's complete]
-```
-
-3. **Request feedback:** "PRD looks good? Any changes needed?"
-4. Apply feedback if any → repeat until approved
-
-### Step 4: Write Plan
-
-1. Write `plan.md`:
-
-```markdown
-# [Feature Name] Implementation Plan
-
-**PRD:** ./prd.md
-**Created:** YYYY-MM-DD
-**Status:** Planning | Ready | In Progress | Done
-
-## Architecture Overview
-
-[2-3 sentences on overall approach]
-
-## Tech Stack
-
-- [Technologies/libraries to use]
-
-## Feature List
-
-- [ ] Feature 1: [brief description]
-- [ ] Feature 2: [brief description]
-
-## Reference
-
-- [Related docs/code links]
-```
-
-2. **Request feedback:** "Plan looks good? Any changes needed?"
-3. Apply feedback if any → repeat until approved
-
-### Step 5: Write Test Code
-
-1. Create `tests/` folder
-2. Write integration tests based on PRD success criteria
-3. Tests should be in **failing state** (implementation doesn't exist yet)
-4. Cover end-to-end scenarios that verify the complete feature
-
-```
-tests/
-  test_[feature]_integration.py   # or .ts, .js depending on project
-  test_[feature]_e2e.py
-```
-
-### Step 6: Complete
+### Step 4: Complete
 
 Report created files:
 
@@ -120,28 +52,23 @@ Report created files:
 Feature planning complete!
 
 Created:
-  features/[name]_[date]/
+  docs/features/[name]_[date]/
     ├── prd.md
-    ├── plan.md
-    └── tests/
-          ├── test_xxx.py
-          └── ...
+    └── technical-spec.md
 
-Next step: /writing-tasks features/[name]_[date]
+Next step: /writing-plans docs/features/[feature-name]_[YYYY-MM-DD]
 ```
 
 ## Key Principles
 
-- **One question at a time** - Don't overwhelm
-- **Multiple choice preferred** - Easier to answer
-- **Feedback after each document** - PRD and Plan must be approved
-- **Tests first (TDD)** - Write failing tests before implementation
-- **YAGNI** - Remove unnecessary features from designs
+- **PRD first** - Always ensure PRD exists before technical-spec
+- **Delegate to skills** - Use /prd and /technical-spec skills
+- **Brainstorming style** - One question at a time, multiple choice preferred
 
 ## Integration
 
-**Next skill:** `/writing-tasks` - breaks Plan into 2-5 minute task units
+**Uses:**
+- `/prd` - creates PRD if not exists
+- `/technical-spec` - creates technical specification
 
-**Pairs with:**
-
-- `/writing-tasks` → `/setup-task-worktrees` → `/executing-tasks`
+**Next skill:** `/writing-plans` - creates detailed implementation plan (plan.md)
