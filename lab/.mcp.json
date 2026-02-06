@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "korea-law": {
+      "command": "uv",
+      "args": ["run", "--directory", "/Users/jinsun/dev/agents-setup/lab/mcp-servers/korea-law", "mcp", "run", "server.py"],
+      "env": {
+        "KOREA_LAW_API_KEY": "${KOREA_LAW_API_KEY}"
+      }
+    },
+    "real-estate-transaction": {
+      "command": "uv",
+      "args": ["run", "--directory", "/Users/jinsun/dev/agents-setup/lab/mcp-servers/real-estate-transaction", "mcp", "run", "server.py"],
+      "env": {
+        "DATA_GO_KR_API_KEY": "${DATA_GO_KR_API_KEY}"
+      }
+    },
+    "building-register": {
+      "command": "uv",
+      "args": ["run", "--directory", "/Users/jinsun/dev/agents-setup/lab/mcp-servers/building-register", "mcp", "run", "server.py"],
+      "env": {
+        "DATA_GO_KR_API_KEY": "${DATA_GO_KR_API_KEY}"
+      }
+    }
+  }
+}
